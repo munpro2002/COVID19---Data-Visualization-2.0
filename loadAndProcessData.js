@@ -1,6 +1,6 @@
 import { feature } from 'topojson';
 import { csv, json } from 'd3';
-export const loadAndProcessData = () => 
+export const loadAndProcessData = () =>
   Promise
     .all([
       csv('covid-data.csv'),
@@ -12,24 +12,24 @@ export const loadAndProcessData = () =>
         accumulator[d['country code']] = d;
         return accumulator;
       }, {});
-			
+
       const countries = feature(topoJSONdata, topoJSONdata.objects.countries);
 
       countries.features.forEach(d => {
         Object.assign(d.properties, rowById[d.id]);
       });
 
-      const featuresWithCovidCase=countries.features
-        .filter(d=>d.properties['31122020'])
-      	.map(d=>{
-        	d.properties['31122020'] = d.properties['31122020'];
-      		return d;
-      });
-      	
-      
-      
+      const featuresWithCovidCase = countries.features
+        .filter(d => d.properties['3152021'])
+        .map(d => {
+          d.properties['3152021'] = d.properties['3152021'];
+          return d;
+        });
+
+
+
       return {
-        features:countries.features,
-      	featuresWithCovidCase
+        features: countries.features,
+        featuresWithCovidCase
       };
     });
